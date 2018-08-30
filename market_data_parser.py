@@ -77,12 +77,22 @@ while True:
 	rr = ws.recv()
 	update = json.loads(rr)
 	uType = update["type"]
-	if uType == "received" or uType == "done" or uType == "open" or uType == "match":
+	acceptedTypes = ["done", "open", "match", "change"]
+	if uType in acceptedTypes:
 		update_sequence = update["sequence"]
 		if (update_sequence <= sequence):
 			print "Discarding %s update #%d" % (uType, update_sequence)
 		else:
 			print "Applying %s update #%d" % (uType, update_sequence)
+			if uType == "received":
+				onRecieve(
+			elif uType == "done":
+			elif uType == "open":
+			elif uType == "match":
+			else:
+				print "error"
+				exit(1)
+			
 	else:
 		print "Unknown message types %s" % uType
 	#print book
